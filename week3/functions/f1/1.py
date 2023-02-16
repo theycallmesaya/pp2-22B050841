@@ -1,19 +1,23 @@
 import random
-number = random.randint(1, 20)
-tries = 1
+
 print("Hello! What is your name?")
 name = input()
-print(f"Well, {name}, I am thinking of a number between 1 and 20.")
-g = "Take a guess."
-print(g)
-n = int(input())
-while (n != number):
-    if (n < number):
-        print("Your guess is too low.")
-    elif (n > number):
-        print("Your guess is too high.")
-    print(g)
-    tries += 1
-    n = int(input())
 
-print(f"Good job, {name}! You guessed my number in {tries} guesses!")
+x = random.randrange(1, 20)
+i = 0
+
+print("Well,", name + ',', "I am thinking of a number between 1 and 20.")
+
+while 1:
+    print("Take a guess.")
+    i += 1
+    n = int(input())
+    print()
+    
+    if n == x:
+        print("Good job,", name + '!', "You guessed my number in", i, "guesses!")
+        break
+    elif x > n:
+        print("Your guess is too low.")
+    else:
+        print("Your guess is too high.")

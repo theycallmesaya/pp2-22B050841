@@ -1,6 +1,8 @@
+def reverse(s):
+    t= s.split()[::-1]
+    for i in t:
+        print(i, end = ' ')
+
 s = input()
-s = s.split()[::-1]
-l = list()
-for i in s:
-    l.append(i)
-print(" ".join(l))
+
+reverse(s)
