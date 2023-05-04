@@ -1,7 +1,6 @@
 import psycopg2
 from config import params
 
-
 config = psycopg2.connect(**params)
 current = config.cursor()
 
@@ -26,7 +25,7 @@ def checkNum(number):
 
 def check(name):
     select = '''
-            SELECT phone_number FROM Phone_Book WHERE name = %s;
+            SELECT phone_number FROM PhoneBook WHERE person_name = %s;
     '''
     current.execute(select, [name])
     DICT = current.fetchone()
@@ -40,23 +39,23 @@ query = str(input())
 if(query == 'insert'):
     #upgrade:
     '''
-        create or replace procedure update(name varchar, phone_numberr varchar)
+        create or replace procedure update(person_namee varchar, phone_numberr varchar)
         as
         $$
             begin
-                UPDATE Phone_Book 
+                UPDATE PhoneBook 
                 SET phone_number = $2 
-                WHERE name = $1;
+                WHERE person_name = $1;
             end;
         $$ language plpgsql;
     '''
     #insert:
     '''
-        create or replace procedure insert(name varchar, phone_number varchar, city varchar)
+        create or replace procedure insert(person_name varchar, phone_number varchar, city varchar)
         as
         $$
             begin
-                insert into Phone_Book(name, phone_number, city) values ($1, $2, $3);
+                insert into PhoneBook(person_name, phone_number, city) values ($1, $2, $3);
             end; 
         $$ language plpgsql;  
     '''
@@ -81,7 +80,7 @@ if(query == 'delete'):
         as
         $$
             begin
-                delete from Phone_Book where name = $1 or phone_number = $1; 
+                delete from PhoneBook where person_name = $1 or phone_number = $1; 
             end;
         $$ language plpgsql;
         call delete(%s);
@@ -96,10 +95,11 @@ if(query == 'pagination'):
     limit = int(input())
     offset = int(input())
     pa = '''
-        select * from Phone_Book offset %s limit %s;
+        select * from PhoneBook offset %s limit %s;
     '''
     current.execute(pa ,(limit,offset))
     print(current.fetchall())
+
 
 
 
